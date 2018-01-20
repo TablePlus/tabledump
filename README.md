@@ -1,6 +1,6 @@
 # What is this
 
-This is a TablePlus Plugin, install TableDump you will have a menu `Dump Item` in context menu. The menu is using for dumping table structure: Copy Table/View/Function SQL Creation.
+This is a TablePlus's Plugin, by install `tabledump` you will have a menu `Dump Item` in context menu. tabpedump menu includes: Copy Table/View/Function SQL Creation.
 
 # Support
 
