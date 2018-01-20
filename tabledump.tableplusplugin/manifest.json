@@ -1,0 +1,27 @@
+{
+    "name": "Dump Table",
+    "identifier": "com.tinyapp.TablePlus.TableDump",
+    "version": "1.0",
+    "detail": "Dump table structure",
+    "author": "TablePlus",
+    "email": "support@tableplus.io",
+    "scripts": [
+        {
+            "location": "item",
+            "type": "separator"
+        },
+        {
+            "name": "Dump Item",
+            "location": "item",
+            "type": "submenu",
+            "children": [
+                {
+                    "location": "item",
+                    "type": "action",
+                    "script": "dumpcreation.js",
+                    "name": "Copy Creation"
+                }
+            ]
+        }
+    ]
+}
