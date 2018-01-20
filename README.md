@@ -2,6 +2,8 @@
 
 This is a TablePlus's Plugin, by install `tabledump` you will have a menu `Dump Item` in context menu. tabpedump menu includes: Copy Table/View/Function SQL Creation.
 
+![tabledump](https://github.com/TablePlus/tabledump/blob/master/images/screenshot.png "tabledump")
+
 # Support
 
 TablePlus build 83 and above.

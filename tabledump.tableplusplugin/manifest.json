@@ -4,6 +4,7 @@
     "version": "1.0",
     "detail": "Dump table structure",
     "author": "TablePlus",
+    "site": "https://github.com/TablePlus/tabledump",
     "email": "support@tableplus.io",
     "scripts": [
         {
