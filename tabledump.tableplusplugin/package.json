@@ -1,5 +1,5 @@
 {
-  "name": "com.tinyapp.TablePlus.OpenURL.tableplusplugin",
+  "name": "com.tinyapp.TablePlus.tabledump.tableplusplugin",
   "version": "1.0.0",
   "description": "This plugin helps fill your empty table with funny text and quote for testing purpose",
   "main": "main.js",
