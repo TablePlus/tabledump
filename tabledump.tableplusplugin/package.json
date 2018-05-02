@@ -4,6 +4,7 @@
   "description": "This plugin helps fill your empty table with funny text and quote for testing purpose",
   "main": "main.js",
   "dependencies": {
+    "npm": "^6.0.0",
     "webpack": "^3.4.1"
   },
   "devDependencies": {
