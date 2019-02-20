@@ -1,7 +1,7 @@
 {
     "name": "Dump Table",
     "identifier": "com.tinyapp.TablePlus.TableDump",
-    "version": "1.0",
+    "version": "1.1",
     "detail": "Dump table structure",
     "author": "TablePlus",
     "site": "https://github.com/TablePlus/tabledump",
@@ -12,15 +12,30 @@
             "type": "separator"
         },
         {
-            "name": "Dump Item",
+            "name": "Script As",
             "location": "item",
             "type": "submenu",
             "children": [
                 {
-                    "location": "item",
                     "type": "action",
                     "script": "dumpcreation.js",
-                    "name": "Copy Creation"
+                    "handler": "creation",
+                    "name": "CREATION"
+                },
+                {
+                    "type": "separator"
+                },
+                {
+                    "type": "action",
+                    "script": "dumpcreation.js",
+                    "handler": "drop",
+                    "name": "DROP"
+                },
+                {
+                    "type": "action",
+                    "script": "dumpcreation.js",
+                    "handler": "truncate",
+                    "name": "TRUNCATE"
                 }
             ]
         }
