@@ -9,8 +9,8 @@ function dumpTableAsDefinition(context, item) {
 
 function camelize(str) {
   return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
-    return index == 0 ? letter.toLowerCase() : letter.toUpperCase();
-  }).replace(/\s+/g, '');
+    return letter.toUpperCase();
+  }).replace(/\s+|-|_/g, '');
 }
 
 function getColumnMigrate(columnName, dataType) {
@@ -79,10 +79,10 @@ class Create${nameCamelcase}Table extends Migration
     }
 	 
     /**
-    * Reverse the migrations.
-    *
-    * @return void
-    */
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
         Schema::dropIfExists('${item.name()}');
