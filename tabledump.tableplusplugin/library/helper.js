@@ -7,6 +7,12 @@ function dumpTableAsDefinition(context, item) {
     });
 }
 
+function camelize(str) {
+  return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
+    return index == 0 ? letter.toLowerCase() : letter.toUpperCase();
+  }).replace(/\s+/g, '');
+}
+
 function getColumnMigrate(columnName, dataType) {
    var typeArr = dataType.split("(");
    var typeOnly = typeArr[0];
@@ -31,7 +37,10 @@ function getColumnMigrate(columnName, dataType) {
 
 function dumpTableAsLaravel(context, item) {
 // Currently only work with MySQL
+
+  var nameCamelcase = camelize(item.name());
 	var header = `<?php
+
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -41,7 +50,7 @@ use Illuminate\Database\Migrations\Migration;
  * @author https://tableplus.com
  * @source https://github.com/TablePlus/tabledump
  */
-class Create${item.name()}Table extends Migration
+class Create${nameCamelcase}Table extends Migration
 {
     /**
      * Run the migrations.
