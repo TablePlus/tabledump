@@ -12,7 +12,7 @@
             "type": "separator"
         },
         {
-            "name": "Script As",
+            "name": "Copy Script As",
             "location": "item",
             "type": "submenu",
             "children": [
