@@ -36,6 +36,12 @@
                     "script": "dumpcreation.js",
                     "handler": "truncate",
                     "name": "TRUNCATE"
+                },
+                {
+                    "type": "action",
+                    "script": "dumpcreation.js",
+                    "handler": "laravel",
+                    "name": "Laravel Migration"
                 }
             ]
         }
