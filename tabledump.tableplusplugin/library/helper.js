@@ -63,12 +63,18 @@ class Create${nameCamelcase}Table extends Migration
 `;
 	var columnNames = [];
 	var columnTypes = [];
+  var isNullables = [];
+  var defaultVals = [];
 	context.execute(`SELECT ordinal_position as ordinal_position,column_name as column_name,column_type AS data_type,is_nullable as is_nullable,column_default as column_default,extra as extra,column_name AS foreign_key,column_comment AS comment FROM information_schema.columns WHERE table_schema='${item.schema()}'AND table_name='${item.name()}';`, (res) => {
 	    res.rows.forEach((row) => {
-	        var columnName = row.raw('column_name');
-	        var columnType = row.raw('data_type');
+	        let columnName = row.raw('column_name');
+	        let columnType = row.raw('data_type');
+          let isNullable = row.raw('is_nullable');
+          let defaultVal = row.raw('column_default');
 	        columnNames.push(columnName);
 	        columnTypes.push(columnType);
+          isNullables.push(isNullable);
+          defaultVals.push(defaultVal);
 	    });
 	    var result = header;
 	    for (let i = 0; i < columnNames.length; i++) { 
