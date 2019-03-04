@@ -16,13 +16,16 @@ function camelize(str) {
 function getColumnMigrate(columnName, dataType) {
    var typeArr = dataType.split("(");
    var typeOnly = typeArr[0];
-   var length = "";
+   var typeLength = "";
    if (typeArr.length > 1) {
-       length = typeArr[1];
+       typeLength = typeArr[1];
    }
    switch(typeOnly) {
 	  case "varchar":
-	      return "$table->string('" + columnName + "', " + length + ";";
+        if (typeLength.length > 0) {
+            return "$table->string('" + columnName + "', " + typeLength + ";";
+        }
+        return "$table->string('" + columnName + "');";
 	  case "text":
 	      return "$table->string('" + columnName + "');";
     case "int":
