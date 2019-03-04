@@ -45,15 +45,13 @@ function getColumnMigrate(columnName, dataType, isNullable) {
         migration = `$table->${typeOnly}('` + columnName + "')";
       }
       break;
-    case "text":
-      migration = "$table->string('" + columnName + "')";
-      break;
     case "char":
       migration = "$table->char('" + columnName + "', " + typeLength + "";
       break;
-    case "binary":
-      migration = "$table->binary('" + columnName + "')";
-      break;
+    case "enum":
+      typeLength = typeLength.substring(0, typeLength.length - 1);
+      migration = "$table->enum('" + columnName + "', [" + typeLength + "])";
+      break;    
     case "bigint":
       if (dataType.includes("unsigned")) {
         migration = "$table->unsignedBigInteger('" + columnName + "')";
@@ -77,7 +75,7 @@ function getColumnMigrate(columnName, dataType, isNullable) {
       }
       break;
     default:
-      migration = "$table->unsupported('" + columnName + "')";
+      migration = `$table->${typeOnly}('` + columnName + "')";
       break;
   }
   if (isNullable.toLowerCase().startsWith("y")) {
