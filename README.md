@@ -1,8 +1,8 @@
 # What is this
 
-This is a TablePlus's Plugin, by install `tabledump` you will have a menu `Dump Item` in context menu. tabpedump menu includes: Copy Table/View/Function SQL Creation.
+This is a TablePlus's Plugin, by install `tabledump` you will have a menu `Copy Script As` in context menu.
 
-![tabledump](https://github.com/TablePlus/tabledump/blob/master/images/screenshot.png "tabledump")
+![tabledump](https://github.com/TablePlus/tabledump/blob/master/images/export-laravel.gif "tabledump")
 
 # Support
 
