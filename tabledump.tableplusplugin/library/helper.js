@@ -28,8 +28,10 @@ function getColumnMigrate(columnName, dataType, isNullable) {
         } else {
             migration = "$table->string('" + columnName + "')";          
         }
+        break;
 	  case "text":
 	      migration = "$table->string('" + columnName + "')";
+        break;
     case "int":
     case "int4":
           if (dataType.includes("unsigned")) {
@@ -37,14 +39,17 @@ function getColumnMigrate(columnName, dataType, isNullable) {
           } else {
               migration = "$table->integer('" + columnName + "')"            
           }
+          break;
     case "tinyint":
           if (dataType.includes("unsigned")) {
               migration = "$table->unsignedTinyInteger('" + columnName + "')"
           } else {
               migration = "$table->tinyInteger('" + columnName + "')"            
           }
+          break;
 	  default:
 	      migration = "$table->unsupported('" + columnName + "')";
+        break;
 	}
   if (isNullable.toLowerCase().charAt(0) == 'y') {
       migration += "->nullable()";
