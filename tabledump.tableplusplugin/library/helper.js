@@ -46,6 +46,7 @@ function getColumnMigrate(columnName, dataType, isNullable) {
         migration = `$table->${typeOnly}('` + columnName + "')";
       }
       break;
+    case "float4":
     case "float8":
       migration = "$table->float('" + columnName + "')";
       break;
