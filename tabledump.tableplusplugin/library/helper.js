@@ -2,11 +2,9 @@
 
 function dumpTableAsDefinition(context, item) {
 	context.itemDefinition(item, function(creation) {
-        SystemService.runInMain(function() {
-            SystemService.insertToClipboard(creation);
-            SystemService.notify('Copy creation', item.type() + ' ' + item.name() + ' creation statement is copied!');
-        });
-    });
+      SystemService.insertToClipboard(creation);
+      SystemService.notify('Copy creation', item.type() + ' ' + item.name() + ' creation statement is copied!');
+  });
 }
 
 function camelize(str) {
@@ -97,10 +95,8 @@ class Create${nameCamelcase}Table extends Migration
     }
 }
 `;
-      SystemService.runInMain(function() {
-	        SystemService.insertToClipboard(result);
-          SystemService.notify('Laravel export', item.type() + ' ' + item.name() + ' export statement is copied!');
-      });
+      SystemService.insertToClipboard(result);
+      SystemService.notify('Laravel export', item.type() + ' ' + item.name() + ' export statement is copied!');
 	});
 }
 
