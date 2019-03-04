@@ -25,11 +25,16 @@ function getColumnMigrate(columnName, dataType) {
 	      return "$table->string('" + columnName + "', " + length + ";";
 	  case "text":	  
 	      return "$table->string('" + columnName + "');";
-      case "int":
+    case "int":
           if (dataType.includes("unsigned")) {
               return "$table->bigIncrements('" + columnName + "');"
           }
           return "$table->integer('" + columnName + "');"
+    case "tinyint":
+          if (dataType.includes("unsigned")) {
+              return "$table->unsignedTinyInteger('" + columnName + "');" 
+          }
+          return "$table->tinyInteger('" + columnName + "');"                 
 	  default:
 	      return "$table->unsupported('" + columnName + "');";
 	}

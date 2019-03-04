@@ -6,7 +6,7 @@ This is a TablePlus's Plugin, by install `tabledump` you will have a menu `Dump 
 
 # Support
 
-TablePlus build 83 and above.
+TablePlus build 200 and above.
 
 # Install
 
