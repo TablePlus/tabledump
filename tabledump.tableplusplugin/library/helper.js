@@ -34,6 +34,16 @@ function getColumnMigrate(columnName, dataType, isNullable) {
         migration = "$table->string('" + columnName + "')";
       }
       break;
+    case "float":
+    case "double":
+    case "decimal":
+      if (typeLength.length > 0) {
+        typeLength = typeLength.replace(',', ', ');
+        migration = `$table->${typeOnly}('` + columnName + "', " + typeLength + "";
+      } else {
+        migration = `$table->${typeOnly}('` + columnName + "')";
+      }
+      break;
     case "text":
       migration = "$table->string('" + columnName + "')";
       break;
