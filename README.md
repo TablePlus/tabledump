@@ -28,7 +28,7 @@ open .
 
 1. Open a connection.
 3. Right on a item in left panel.
-4. Select on `Dump Item` in menu.
+4. Select `Copy Script As` in menu.
 
 # License
 
