@@ -23,9 +23,6 @@
                     "name": "CREATION"
                 },
                 {
-                    "type": "separator"
-                },
-                {
                     "type": "action",
                     "script": "dumpcreation.js",
                     "handler": "drop",
@@ -36,6 +33,9 @@
                     "script": "dumpcreation.js",
                     "handler": "truncate",
                     "name": "TRUNCATE"
+                },
+                {
+                    "type": "separator"
                 },
                 {
                     "type": "action",

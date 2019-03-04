@@ -136,6 +136,12 @@ class Create${nameCamelcase}Table extends Migration
       return;
   }
   context.execute(query, res => {
+    res.rows.sort((l, r) => {
+      return (
+        parseInt(l.raw("ordinal_position")) >
+        parseInt(r.raw("ordinal_position"))
+      );
+    });
     res.rows.forEach(row => {
       let columnName = row.raw("column_name");
       let columnType = row.raw("data_type");
