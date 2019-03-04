@@ -93,8 +93,6 @@ function getColumnMigrate(columnName, dataType, isNullable) {
 }
 
 function dumpTableAsLaravel(context, item) {
-  // Currently only work with MySQL
-
   var nameCamelcase = camelize(item.name());
   var header = `<?php
 
