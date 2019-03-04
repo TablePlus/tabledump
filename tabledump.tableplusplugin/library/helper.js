@@ -38,6 +38,7 @@ function getColumnMigrate(columnName, dataType, isNullable) {
     case "double":
     case "decimal":
       if (typeLength.length > 0) {
+        // Pretty length format: 8,2) => 8, 2) 
         typeLength = typeLength.replace(',', ', ');
         migration = `$table->${typeOnly}('` + columnName + "', " + typeLength + "";
       } else {
