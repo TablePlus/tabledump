@@ -46,6 +46,9 @@ function getColumnMigrate(columnName, dataType, isNullable) {
         migration = `$table->${typeOnly}('` + columnName + "')";
       }
       break;
+    case "float8":
+      migration = "$table->float('" + columnName + "')";
+      break;
     case "char":
       migration = "$table->char('" + columnName + "', " + typeLength + "";
       break;
@@ -53,6 +56,7 @@ function getColumnMigrate(columnName, dataType, isNullable) {
       typeLength = typeLength.substring(0, typeLength.length - 1);
       migration = "$table->enum('" + columnName + "', [" + typeLength + "])";
       break;
+    case "int8":
     case "bigint":
       if (dataType.includes("unsigned")) {
         migration = "$table->unsignedBigInteger('" + columnName + "')";
