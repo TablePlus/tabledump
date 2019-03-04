@@ -13,35 +13,43 @@ function camelize(str) {
   }).replace(/\s+|-|_/g, '');
 }
 
-function getColumnMigrate(columnName, dataType) {
+function getColumnMigrate(columnName, dataType, isNullable) {
    var typeArr = dataType.split("(");
    var typeOnly = typeArr[0];
    var typeLength = "";
    if (typeArr.length > 1) {
        typeLength = typeArr[1];
    }
+   var migration = "";
    switch(typeOnly) {
 	  case "varchar":
         if (typeLength.length > 0) {
-            return "$table->string('" + columnName + "', " + typeLength + ";";
+            migration = "$table->string('" + columnName + "', " + typeLength + "";
+        } else {
+            migration = "$table->string('" + columnName + "')";          
         }
-        return "$table->string('" + columnName + "');";
 	  case "text":
-	      return "$table->string('" + columnName + "');";
+	      migration = "$table->string('" + columnName + "')";
     case "int":
     case "int4":
           if (dataType.includes("unsigned")) {
-              return "$table->bigIncrements('" + columnName + "');"
+              migration = "$table->bigIncrements('" + columnName + "')"
+          } else {
+              migration = "$table->integer('" + columnName + "')"            
           }
-          return "$table->integer('" + columnName + "');"
     case "tinyint":
           if (dataType.includes("unsigned")) {
-              return "$table->unsignedTinyInteger('" + columnName + "');"
+              migration = "$table->unsignedTinyInteger('" + columnName + "')"
+          } else {
+              migration = "$table->tinyInteger('" + columnName + "')"            
           }
-          return "$table->tinyInteger('" + columnName + "');"
 	  default:
-	      return "$table->unsupported('" + columnName + "');";
+	      migration = "$table->unsupported('" + columnName + "')";
 	}
+  if (isNullable.toLowerCase().charAt(0) == 'y') {
+      migration += "->nullable()";
+  }
+  return migration + ";";
 }
 
 function dumpTableAsLaravel(context, item) {
@@ -100,7 +108,7 @@ class Create${nameCamelcase}Table extends Migration
 	    });
 	    var result = header;
 	    for (let i = 0; i < columnNames.length; i++) { 
-	    	var columnMigrate = getColumnMigrate(columnNames[i], columnTypes[i]);
+	    	var columnMigrate = getColumnMigrate(columnNames[i], columnTypes[i], isNullables[i]);
 	    	result += `            ${columnMigrate}\n`;
 	    };
 	    result += `        });
