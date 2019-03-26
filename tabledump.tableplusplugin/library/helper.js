@@ -81,6 +81,13 @@ function getColumnMigrate(columnName, dataType, isNullable) {
   if (isNullable.toLowerCase().startsWith("y")) {
     migration += "->nullable()";
   }
+  if (defaultVal) {
+  	// ensure non-ints are properly escaped
+  	if (['tinyint', 'int', 'int2', 'int4', 'int8', 'bigint'].indexOf(typeOnly) === -1) {
+	  defaultVal = JSON.stringify(defaultVal);
+  	}
+	migration += "->default(" + defaultVal + ")";
+  }
   return migration + ";";
 }
 
