@@ -59,33 +59,24 @@ function getColumnMigrate(columnName, dataType, isNullable) {
       break;
     case "int8":
     case "bigint":
-      if (dataType.includes("unsigned")) {
-        migration = "$table->unsignedBigInteger('" + columnName + "')";
-      } else {
-        migration = "$table->bigInteger('" + columnName + "')";
-      }
+      migration = "$table->bigInteger('" + columnName + "')";
       break;
     case "int":
     case "int4":
-      if (dataType.includes("unsigned")) {
-        migration = "$table->bigIncrements('" + columnName + "')";
-      } else {
-        migration = "$table->integer('" + columnName + "')";
-      }
+      migration = "$table->integer('" + columnName + "')";
       break;
     case "int2":
       migration = "$table->smallInteger('" + columnName + "')";
       break;
     case "tinyint":
-      if (dataType.includes("unsigned")) {
-        migration = "$table->unsignedTinyInteger('" + columnName + "')";
-      } else {
-        migration = "$table->tinyInteger('" + columnName + "')";
-      }
+      migration = "$table->tinyInteger('" + columnName + "')";
       break;
     default:
       migration = `$table->${typeOnly}('` + columnName + "')";
       break;
+  }
+  if (dataType.includes("unsigned")) {
+    migration += "->unsigned()";
   }
   if (isNullable.toLowerCase().startsWith("y")) {
     migration += "->nullable()";
