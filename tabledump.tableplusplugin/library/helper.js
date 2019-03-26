@@ -89,7 +89,7 @@ function getColumnMigrate(columnName, dataType, isNullable) {
   }
   if (defaultVal) {
   	// ensure non-ints are properly escaped
-  	if (['tinyint', 'int', 'int2', 'int4', 'int8', 'bigint'].indexOf(typeOnly) === -1) {
+  	if (!typeOnly.includes("int")) {
 	  defaultVal = JSON.stringify(defaultVal);
   	}
 	migration += "->default(" + defaultVal + ")";
