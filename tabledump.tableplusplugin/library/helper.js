@@ -65,9 +65,15 @@ function getColumnMigrate(columnName, dataType, isNullable) {
     case "int4":
       migration = "$table->integer('" + columnName + "')";
       break;
+    case "int3":
+    case "mediumint":
+	  migration = "$table->mediumInteger('" + columnName + "')";
+	  break;
     case "int2":
+    case "smallint":
       migration = "$table->smallInteger('" + columnName + "')";
       break;
+    case "int1":
     case "tinyint":
       migration = "$table->tinyInteger('" + columnName + "')";
       break;
