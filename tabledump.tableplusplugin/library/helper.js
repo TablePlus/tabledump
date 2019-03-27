@@ -18,7 +18,7 @@ function camelize(str) {
     .replace(/\s+|-|_/g, "");
 }
 
-function getColumnMigrate(columnName, dataType, isNullable) {
+function getColumnMigrate(columnName, dataType, isNullable, defaultVal) {
   var typeArr = dataType.split("(");
   var typeOnly = typeArr[0];
   var typeLength = "";
@@ -67,8 +67,8 @@ function getColumnMigrate(columnName, dataType, isNullable) {
       break;
     case "int3":
     case "mediumint":
-	  migration = "$table->mediumInteger('" + columnName + "')";
-	  break;
+      migration = "$table->mediumInteger('" + columnName + "')";
+      break;
     case "int2":
     case "smallint":
       migration = "$table->smallInteger('" + columnName + "')";
@@ -88,11 +88,11 @@ function getColumnMigrate(columnName, dataType, isNullable) {
     migration += "->nullable()";
   }
   if (defaultVal) {
-  	// ensure non-ints are properly escaped
-  	if (!typeOnly.includes("int")) {
-	  defaultVal = JSON.stringify(defaultVal);
-  	}
-	migration += "->default(" + defaultVal + ")";
+    // ensure non-ints are properly escaped
+    if (!typeOnly.includes("int")) {
+      defaultVal = JSON.stringify(defaultVal);
+    }
+    migration += "->default(" + defaultVal + ")";
   }
   return migration + ";";
 }
@@ -160,7 +160,8 @@ class Create${nameCamelcase}Table extends Migration
       var columnMigrate = getColumnMigrate(
         columnNames[i],
         columnTypes[i],
-        isNullables[i]
+        isNullables[i],
+        defaultVals[i]
       );
       result += `            ${columnMigrate}\n`;
     }
