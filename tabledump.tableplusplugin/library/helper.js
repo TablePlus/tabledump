@@ -18,7 +18,7 @@ function camelize(str) {
     .replace(/\s+|-|_/g, "");
 }
 
-function getColumnMigrate(columnName, dataType, isNullable, defaultVal) {
+function getColumnMigrate(columnName, dataType, isNullable, defaultVal, columnComment) {
   var typeArr = dataType.split("(");
   var typeOnly = typeArr[0];
   var typeLength = "";
@@ -84,9 +84,11 @@ function getColumnMigrate(columnName, dataType, isNullable, defaultVal) {
   if (dataType.includes("unsigned")) {
     migration += "->unsigned()";
   }
+  
   if (isNullable.toLowerCase().startsWith("y")) {
     migration += "->nullable()";
   }
+  
   if (defaultVal) {
     // ensure non-ints are properly escaped
     if (!typeOnly.includes("int")) {
@@ -94,6 +96,11 @@ function getColumnMigrate(columnName, dataType, isNullable, defaultVal) {
     }
     migration += "->default(" + defaultVal + ")";
   }
+  
+  if (typeof columnComment != 'undefined' && columnComment) {
+    migration += "->comment('" + columnComment.trim() + "')";
+  }
+  
   return migration + ";";
 }
 
@@ -125,6 +132,7 @@ class Create${nameCamelcase}Table extends Migration
   var columnTypes = [];
   var isNullables = [];
   var defaultVals = [];
+  var columnComments = [];
   var query;
   var driver = context.driver();
   switch (driver) {
@@ -145,23 +153,24 @@ class Create${nameCamelcase}Table extends Migration
         parseInt(r.raw("ordinal_position"))
       );
     });
+    
     res.rows.forEach(row => {
-      let columnName = row.raw("column_name");
-      let columnType = row.raw("data_type");
-      let isNullable = row.raw("is_nullable");
-      let defaultVal = row.raw("column_default");
-      columnNames.push(columnName);
-      columnTypes.push(columnType);
-      isNullables.push(isNullable);
-      defaultVals.push(defaultVal);
+      columnNames.push(row.raw("column_name"));
+      columnTypes.push(row.raw("data_type"));
+      isNullables.push(row.raw("is_nullable"));
+      defaultVals.push(row.raw("column_default"));
+      columnComments.push(row.raw("comment"));
     });
+    
     var result = header;
+    
     for (let i = 0; i < columnNames.length; i++) {
       var columnMigrate = getColumnMigrate(
         columnNames[i],
         columnTypes[i],
         isNullables[i],
-        defaultVals[i]
+        defaultVals[i],
+        columnComments[i]
       );
       result += `            ${columnMigrate}\n`;
     }
