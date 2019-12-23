@@ -1,4 +1,5 @@
 "use strict";
+import { getTableStruct } from './lib';
 
 function dumpTableAsDefinition(context, item) {
   context.itemDefinition(item, function(creation) {
@@ -125,26 +126,7 @@ class Create${nameCamelcase}Table extends Migration
   var columnTypes = [];
   var isNullables = [];
   var defaultVals = [];
-  var query;
-  var driver = context.driver();
-  switch (driver) {
-    case "MySQL":
-      query = `SELECT ordinal_position as ordinal_position,column_name as column_name,column_type AS data_type,is_nullable as is_nullable,column_default as column_default,extra as extra,column_name AS foreign_key,column_comment AS comment FROM information_schema.columns WHERE table_schema='${item.schema()}'AND table_name='${item.name()}';`;
-      break;
-    case "PostgreSQL":
-      query = `SELECT ordinal_position,column_name,udt_name AS data_type,numeric_precision,datetime_precision,numeric_scale,character_maximum_length AS data_length,is_nullable,column_name as check,column_name as check_constraint,column_default,column_name AS foreign_key,pg_catalog.col_description(16402,ordinal_position) as comment FROM information_schema.columns WHERE table_name='${item.name()}'AND table_schema='${item.schema()}';`;
-      break;
-    default:
-      context.alert("Rrror", driver + " is not supported");
-      return;
-  }
-  context.execute(query, res => {
-    res.rows.sort((l, r) => {
-      return (
-        parseInt(l.raw("ordinal_position")) >
-        parseInt(r.raw("ordinal_position"))
-      );
-    });
+  getTableStruct(context, item, (err, res) => {
     res.rows.forEach(row => {
       let columnName = row.raw("column_name");
       let columnType = row.raw("data_type");
