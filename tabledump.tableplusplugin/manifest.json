@@ -5,7 +5,7 @@
     "detail": "Dump table structure",
     "author": "TablePlus",
     "site": "https://github.com/TablePlus/tabledump",
-    "email": "support@tableplus.io",
+    "email": "nick@tableplus.com",
     "scripts": [
         {
             "location": "item",
