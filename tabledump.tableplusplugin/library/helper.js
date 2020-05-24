@@ -12,13 +12,13 @@ function dumpTableAsDefinition(context, item) {
 
 function camelize(str) {
   return str
-    .replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
+    .replace(/(?:^\w|[A-Z]|\b\w|_\w)/g, function(letter, index) {
       return letter.toUpperCase();
     })
     .replace(/\s+|-|_/g, "");
 }
 
-function getColumnMigrate(columnName, dataType, isNullable, defaultVal, columnComment) {
+function getColumnMigrate(columnName, dataType, isNullable, defaultVal, extra, columnComment) {
   var typeArr = dataType.split("(");
   var typeOnly = typeArr[0];
   var typeLength = "";
@@ -90,17 +90,21 @@ function getColumnMigrate(columnName, dataType, isNullable, defaultVal, columnCo
   }
   
   if (defaultVal) {
-    // ensure non-ints are properly escaped
-    if (!typeOnly.includes("int")) {
-      defaultVal = JSON.stringify(defaultVal);
-    }
     migration += "->default(" + defaultVal + ")";
+  }
+    
+  if (extra) {
+    switch (extra) {
+      case "auto_increment":
+        migration += "->autoIncrement()";
+        break;
+    }
   }
   
   if (typeof columnComment != 'undefined' && columnComment) {
     migration += "->comment('" + columnComment.trim() + "')";
   }
-  
+
   return migration + ";";
 }
 
@@ -133,6 +137,7 @@ class Create${nameCamelcase}Table extends Migration
   var isNullables = [];
   var defaultVals = [];
   var columnComments = [];
+  var extras = [];
   var query;
   var driver = context.driver();
   switch (driver) {
@@ -155,10 +160,16 @@ class Create${nameCamelcase}Table extends Migration
     });
     
     res.rows.forEach(row => {
-      columnNames.push(row.raw("column_name"));
-      columnTypes.push(row.raw("data_type"));
-      isNullables.push(row.raw("is_nullable"));
-      defaultVals.push(row.raw("column_default"));
+      let columnName = row.raw("column_name");
+      let columnType = row.raw("data_type");
+      let isNullable = row.raw("is_nullable");
+      let defaultVal = row.raw("column_default");
+      let extra = row.raw("extra");
+      columnNames.push(columnName);
+      columnTypes.push(columnType);
+      isNullables.push(isNullable);
+      defaultVals.push(defaultVal);
+      extras.push(extra);
       columnComments.push(row.raw("comment"));
     });
     
@@ -170,6 +181,7 @@ class Create${nameCamelcase}Table extends Migration
         columnTypes[i],
         isNullables[i],
         defaultVals[i],
+        extras[i],
         columnComments[i]
       );
       result += `            ${columnMigrate}\n`;
