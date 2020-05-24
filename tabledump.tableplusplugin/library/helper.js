@@ -18,7 +18,7 @@ function camelize(str) {
     .replace(/\s+|-|_/g, "");
 }
 
-function getColumnMigrate(columnName, dataType, isNullable, defaultVal, extra) {
+function getColumnMigrate(columnName, dataType, isNullable, defaultVal, extra, columnComment) {
   var typeArr = dataType.split("(");
   var typeOnly = typeArr[0];
   var typeLength = "";
@@ -84,19 +84,25 @@ function getColumnMigrate(columnName, dataType, isNullable, defaultVal, extra) {
   if (dataType.includes("unsigned")) {
     migration += "->unsigned()";
   }
+  
   if (isNullable.toLowerCase().startsWith("y")) {
     migration += "->nullable()";
   }
+  
   if (defaultVal) {
     migration += "->default(" + defaultVal + ")";
   }
-
+    
   if (extra) {
     switch (extra) {
       case "auto_increment":
         migration += "->autoIncrement()";
         break;
     }
+  }
+  
+  if (typeof columnComment != 'undefined' && columnComment) {
+    migration += "->comment('" + columnComment.trim() + "')";
   }
 
   return migration + ";";
@@ -130,6 +136,7 @@ class Create${nameCamelcase}Table extends Migration
   var columnTypes = [];
   var isNullables = [];
   var defaultVals = [];
+  var columnComments = [];
   var extras = [];
   var query;
   var driver = context.driver();
@@ -151,6 +158,7 @@ class Create${nameCamelcase}Table extends Migration
         parseInt(r.raw("ordinal_position"))
       );
     });
+    
     res.rows.forEach(row => {
       let columnName = row.raw("column_name");
       let columnType = row.raw("data_type");
@@ -162,15 +170,19 @@ class Create${nameCamelcase}Table extends Migration
       isNullables.push(isNullable);
       defaultVals.push(defaultVal);
       extras.push(extra);
+      columnComments.push(row.raw("comment"));
     });
+    
     var result = header;
+    
     for (let i = 0; i < columnNames.length; i++) {
       var columnMigrate = getColumnMigrate(
         columnNames[i],
         columnTypes[i],
         isNullables[i],
         defaultVals[i],
-        extras[i]
+        extras[i],
+        columnComments[i]
       );
       result += `            ${columnMigrate}\n`;
     }
