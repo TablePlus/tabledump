@@ -18,7 +18,7 @@ function camelize(str) {
     .replace(/\s+|-|_/g, "");
 }
 
-function getColumnMigrate(columnName, dataType, isNullable, defaultVal) {
+function getColumnMigrate(columnName, dataType, isNullable, defaultVal, extra) {
   var typeArr = dataType.split("(");
   var typeOnly = typeArr[0];
   var typeLength = "";
@@ -90,6 +90,15 @@ function getColumnMigrate(columnName, dataType, isNullable, defaultVal) {
   if (defaultVal) {
     migration += "->default(" + defaultVal + ")";
   }
+
+  if (extra) {
+    switch (extra) {
+      case "auto_increment":
+        migration += "->autoIncrement()";
+        break;
+    }
+  }
+
   return migration + ";";
 }
 
@@ -121,6 +130,7 @@ class Create${nameCamelcase}Table extends Migration
   var columnTypes = [];
   var isNullables = [];
   var defaultVals = [];
+  var extras = [];
   var query;
   var driver = context.driver();
   switch (driver) {
@@ -146,10 +156,12 @@ class Create${nameCamelcase}Table extends Migration
       let columnType = row.raw("data_type");
       let isNullable = row.raw("is_nullable");
       let defaultVal = row.raw("column_default");
+      let extra = row.raw("extra");
       columnNames.push(columnName);
       columnTypes.push(columnType);
       isNullables.push(isNullable);
       defaultVals.push(defaultVal);
+      extras.push(extra);
     });
     var result = header;
     for (let i = 0; i < columnNames.length; i++) {
@@ -157,7 +169,8 @@ class Create${nameCamelcase}Table extends Migration
         columnNames[i],
         columnTypes[i],
         isNullables[i],
-        defaultVals[i]
+        defaultVals[i],
+        extras[i]
       );
       result += `            ${columnMigrate}\n`;
     }
