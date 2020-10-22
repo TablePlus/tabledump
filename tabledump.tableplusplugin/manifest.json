@@ -1,7 +1,7 @@
 {
     "name": "Dump Table",
     "identifier": "com.tinyapp.TablePlus.TableDump",
-    "version": "1.2",
+    "version": "1.3",
     "detail": "Dump table structure",
     "author": "TablePlus",
     "site": "https://github.com/TablePlus/tabledump",
