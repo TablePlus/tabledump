@@ -20,7 +20,7 @@ function camelize(str) {
 
 function getColumnMigrate(columnName, dataType, isNullable, defaultVal, extra, columnComment) {
   var typeArr = dataType.split("(");
-  var typeOnly = typeArr[0];
+  var typeOnly = typeArr[0].replace(' unsigned', '');
   var typeLength = "";
   if (typeArr.length > 1) {
     typeLength = typeArr[1];
