@@ -1,7 +1,7 @@
 {
   "name": "com.tinyapp.TablePlus.tabledump.tableplusplugin",
-  "version": "1.2.0",
-  "description": "This plugin helps fill your empty table with funny text and quote for testing purpose",
+  "version": "1.4b1",
+  "description": "Dump table structure",
   "main": "main.js",
   "devDependencies": {
     "babel-core": "^6.25.0",
