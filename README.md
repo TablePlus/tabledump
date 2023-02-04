@@ -2,6 +2,8 @@
 
 This is a TablePlus's Plugin, by install `tabledump` you will have a menu `Copy Script As` in context menu.
 
+This fork includes support for Phinx migrations, and will also export any indexes and foreign keys associated with the chosen table.
+
 ![tabledump](https://github.com/TablePlus/tabledump/blob/master/images/export-laravel.gif "tabledump")
 
 # Support
