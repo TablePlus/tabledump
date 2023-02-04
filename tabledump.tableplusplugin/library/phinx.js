@@ -1,3 +1,4 @@
+/* globals Application,global,SystemService */
 'use strict';
 
 import { camelize } from './helper';

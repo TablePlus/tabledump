@@ -1,3 +1,4 @@
+/* globals SystemService */
 'use strict';
 
 function dumpTableAsDefinition(context, item) {

@@ -1,3 +1,4 @@
+/* globals global,SystemService */
 'use strict';
 
 import { dumpTableAsDefinition } from './library/helper';
