@@ -131,7 +131,7 @@ function dumpTableAsPhinx(tblPlusContext, tblPlusCurrentTable) {
  * @returns string
  */
 function buildPhpArrayOptions(opts) {
-    var builtOptions = ''
+    var builtOptions = '';
     if (Object.entries(opts).length > 0) {
         builtOptions += ', [';
         var optCount = 1;
