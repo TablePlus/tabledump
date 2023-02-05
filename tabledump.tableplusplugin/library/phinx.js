@@ -1,4 +1,4 @@
-/* globals Application,global,SystemService */
+/* globals Application,SystemService */
 'use strict';
 
 import { camelize } from './helper';
@@ -332,7 +332,7 @@ function writeTableDumpToClipboard(columns, indexes, foreignKeys, header, tblPlu
     SystemService.insertToClipboard(result);
     SystemService.notify(
         'Phinx export',
-        tblPlusCurrentTable.type() + ' ' + tblPlusCurrentTable.name() + ' export statement is copied!'
+        tblPlusCurrentTable.type() + ' ' + tblPlusCurrentTable.name() + ' migration code is copied!'
     );
 }
 
