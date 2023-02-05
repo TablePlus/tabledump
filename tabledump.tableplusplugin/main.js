@@ -2,9 +2,8 @@
 'use strict';
 
 import { dumpTableAsDefinition } from './library/helper';
-
 import { dumpTableAsLaravel } from './library/laravel';
-
+import { dumpTableAsPhalconModel } from './library/phalcon-model';
 import { dumpTableAsPhinx } from './library/phinx';
 
 var creation = function (context) {
@@ -59,8 +58,19 @@ var phinx = function (context) {
     dumpTableAsPhinx(context, item);
 };
 
+var phalconModel = function (context) {
+    // Get table in opening tab
+    let item = context.clickedItem();
+    if (item == null) {
+        context.alert('Error', 'Please select a Table');
+        return;
+    }
+    dumpTableAsPhalconModel(context, item);
+};
+
 global.creation = creation;
 global.drop = drop;
 global.truncate = truncate;
 global.laravel = laravel;
 global.phinx = phinx;
+global.phalconModel = phalconModel;

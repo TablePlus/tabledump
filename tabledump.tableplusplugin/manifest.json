@@ -1,7 +1,7 @@
 {
     "name": "Dump Table",
     "identifier": "com.tinyapp.TablePlus.TableDump",
-    "version": "1.4b1",
+    "version": "1.4b2",
     "detail": "Dump table structure",
     "author": "TablePlus",
     "site": "https://github.com/TablePlus/tabledump",
@@ -48,6 +48,15 @@
                     "script": "dumpcreation.js",
                     "handler": "phinx",
                     "name": "Phinx Migration"
+                },
+                {
+                    "type": "separator"
+                },
+                {
+                    "type": "action",
+                    "script": "dumpcreation.js",
+                    "handler": "phalconModel",
+                    "name": "Phalcon Model"
                 }
             ]
         }

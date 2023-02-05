@@ -1,6 +1,6 @@
 {
   "name": "com.tinyapp.TablePlus.tabledump.tableplusplugin",
-  "version": "1.4b1",
+  "version": "1.4b2",
   "description": "Dump table structure",
   "main": "main.js",
   "devDependencies": {
