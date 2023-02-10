@@ -189,7 +189,7 @@ function getColumnDefinition(columnName, columnType, isNullable, defaultVal, ext
         columnOptions.default = defaultVal;
     } else if (defaultVal == 'current_timestamp()' || defaultVal == 'now()') {
         columnOptions.default = "'CURRENT_TIMESTAMP'";
-    } else {
+    } else if (typeof (columnOptions.default) != 'undefined') {
         columnOptions.default = "'" + defaultVal + "'";
     }
     if (typeof columnComment != 'undefined' && columnComment) {
