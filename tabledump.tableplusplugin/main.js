@@ -1,8 +1,12 @@
+/* globals global,SystemService */
 'use strict';
 
-import { dumpTableAsDefinition, dumpTableAsLaravel } from './library/helper';
+import { dumpTableAsDefinition } from './library/helper';
+import { dumpTableAsLaravel } from './library/laravel';
+import { dumpTableAsPhalconModel } from './library/phalcon-model';
+import { dumpTableAsPhinx } from './library/phinx';
 
-var creation = function(context) {
+var creation = function (context) {
     // Get table in opening tab
     let item = context.clickedItem();
     if (item == null) {
@@ -12,7 +16,7 @@ var creation = function(context) {
     dumpTableAsDefinition(context, item);
 };
 
-var drop = function(context) {
+var drop = function (context) {
     // Get table in opening tab
     let item = context.clickedItem();
     if (item == null) {
@@ -23,18 +27,18 @@ var drop = function(context) {
     SystemService.notify('Copy creation', item.type() + ' ' + item.name() + ' drop statement is copied!');
 };
 
-var truncate = function(context) {
+var truncate = function (context) {
     // Get table in opening tab
     let item = context.clickedItem();
     if (item == null) {
         context.alert('Error', 'Please select a Table');
         return;
     }
-    SystemService.insertToClipboard('TRUNCATE ' + item.type() +  ' ' + item.nameWithQuotes() + ';');
+    SystemService.insertToClipboard('TRUNCATE ' + item.type() + ' ' + item.nameWithQuotes() + ';');
     SystemService.notify('Copy creation', item.type() + ' ' + item.name() + ' truncate statement is copied!');
 };
 
-var laravel = function(context)  {
+var laravel = function (context) {
     // Get table in opening tab
     let item = context.clickedItem();
     if (item == null) {
@@ -42,9 +46,31 @@ var laravel = function(context)  {
         return;
     }
     dumpTableAsLaravel(context, item);
-}
+};
+
+var phinx = function (context) {
+    // Get table in opening tab
+    let item = context.clickedItem();
+    if (item == null) {
+        context.alert('Error', 'Please select a Table');
+        return;
+    }
+    dumpTableAsPhinx(context, item);
+};
+
+var phalconModel = function (context) {
+    // Get table in opening tab
+    let item = context.clickedItem();
+    if (item == null) {
+        context.alert('Error', 'Please select a Table');
+        return;
+    }
+    dumpTableAsPhalconModel(context, item);
+};
 
 global.creation = creation;
 global.drop = drop;
 global.truncate = truncate;
 global.laravel = laravel;
+global.phinx = phinx;
+global.phalconModel = phalconModel;
